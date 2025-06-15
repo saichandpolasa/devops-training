@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     // Assuming your Dockerfile is in the root of your repository
-                    sh 'docker build -t saichand492/my-first-docker-image:wq .'
+                    sh 'docker build -t saichand492/my-first-docker-image:latest .'
                 }
             }
         }
