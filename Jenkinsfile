@@ -1,14 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Assuming your Dockerfile is in the root of your repository
-                    sh 'docker build -t saichand492/my-first-docker-image:latest .'
-                }
+                git 'https://github.com/saichandpolasa/devops-training.git'
             }
         }
-        // Add more stages as needed (e.g., push, deploy)
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
+            }
+        }
     }
 }
