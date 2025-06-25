@@ -10,4 +10,5 @@ module "ec2_instance" {
 
 resource "aws_instance" "test_instance" {
   ami = "ami-05d3e0186c058c4dd"
+instance_type = "t3.small"
 }
