@@ -37,7 +37,7 @@ pipeline {
 
         stage('Terraform Apply') {
             when {
-                expression { env.type == 'apply' }
+                expression { params.type == 'apply' }
             }
             steps {
                 sh 'terraform apply -auto-approve'
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Terraform Destroy') {
              when {
-                expression { env.type == 'destroy' }
+                expression { params.type == 'destroy' }
             }
             steps {
                 sh 'terraform destroy -auto-approve'
