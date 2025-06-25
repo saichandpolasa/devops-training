@@ -8,6 +8,8 @@ pipeline {
 
     environment {
         AWS_REGION = "eu-north-1"
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
     stages {
@@ -23,35 +25,32 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
                     sh 'terraform init'
-                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
                     sh 'terraform plan'
-                }
             }
         }
 
-        stage('Terraform Destroy') {
-            steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    sh 'terraform destroy -auto-approve'
-                }
+        stage('Terraform Apply') {
+            when {
+                expression { env.type == 'apply' }
             }
+            steps {
+                sh 'terraform apply -auto-approve'
+                }
+        }
+
+        stage('Terraform Destroy') {
+             when {
+                expression { env.type == 'destroy' }
+            }
+            steps {
+                sh 'terraform destroy -auto-approve'
+                }
         }
     }
 }
