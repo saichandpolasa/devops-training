@@ -9,5 +9,5 @@ module "ec2_instance" {
 }
 
 resource "aws_instance" "test_instance" {
-  name = "test-instance"
+  ami = "ami-05d3e0186c058c4dd"
 }
