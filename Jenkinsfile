@@ -15,11 +15,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: 'https://github.com/saichandpolasa/devops-training']],
-                    extensions: [[$class: 'CloneOption', shallow: true, depth: 1]]
-                ])
+                checkout scm
             }
         }
 
