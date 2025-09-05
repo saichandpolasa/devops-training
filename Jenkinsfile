@@ -1,6 +1,12 @@
 pipeline {
     agent any
-
+parameters {
+        choice(
+            name: 'type',
+            choices: ['plan', 'apply', 'destroy'],
+            description: 'Choose Terraform action'
+        )
+    }
     options {
         timestamps()
         timeout(time: 15, unit: 'MINUTES')
@@ -50,4 +56,5 @@ pipeline {
         }
     }
 }
+
 
