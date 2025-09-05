@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "saichand-test-bucket"
+    bucket = "saichand-testing-bucket"
     key = "terraform.tfstate"
     region = "eu-north-1"
 }
